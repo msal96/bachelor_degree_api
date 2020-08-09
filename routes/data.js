@@ -48,30 +48,32 @@ Router.get('/', (req, res) => {
 })
 
 Router.post('/', (req, res) => {
+  console.log('body: ', req.body)
   const { airHumidity = {}, airTemperature = {}, soilHumidity = {}, soilTemperature = {} } = req.body
+  console.log('airTemperature: ', airTemperature)
   const timestamp = new Date().getTime()
   const updatedAt = moment(timestamp).format("DD/MM/YYYY")
-  
+
   const columnsToChange = `
-      ${airHumidity.value ? 'airHumidity, ' : ''} ${airHumidity.desired.min ? 'desiredAirHumidityMin, ' : ''} ${airHumidity.desired.max ? 'desiredAirHumidityMax, ' : ''}
-      ${airTemperature.value ? 'airTemperature, ' : ''} ${airTemperature.desired.min ? 'desiredAirTemperatureMin, ' : ''} ${airTemperature.desired.max ? 'desiredAirTemperatureMax, ' : ''}
-      ${soilHumidity.value ? 'soilHumidity, ' : ''} ${soilHumidity.desired.min ? 'desiredSoilHumidityMin, ' : ''} ${soilHumidity.desired.max ? 'desiredSoilHumidityMax, ' : ''}
-      ${soilTemperature.value ? 'soilTemperature, ' : ''} ${soilTemperature.desired.min ? 'desiredSoilTemperatureMin, ' : ''} ${soilTemperature.desired.max ? 'desiredSoilTemperatureMax, ' : ''}
+      ${airHumidity.value || airHumidity.value === 0 ? 'airHumidity, ' : ''} ${airHumidity.desired && sairHumidity.desired.min ? 'desiredAirHumidityMin, ' : ''} ${airHumidity.desired && sairHumidity.desired.max ? 'desiredAirHumidityMax, ' : ''}
+      ${airTemperature.value || airTemperature.value === 0 ? 'airTemperature, ' : ''} ${airTemperature.desired && airTemperature.desired.min ? 'desiredAirTemperatureMin, ' : ''} ${airTemperature.desired && airTemperature.desired.max ? 'desiredAirTemperatureMax, ' : ''}
+      ${soilHumidity.value || soilHumidity.value === 0 ? 'soilHumidity, ' : ''} ${soilHumidity.desired && soilHumidity.desired.min ? 'desiredSoilHumidityMin, ' : ''} ${soilHumidity.desired && soilHumidity.desired.max ? 'desiredSoilHumidityMax, ' : ''}
+      ${soilTemperature.value || soilTemperature.value === 0 ? 'soilTemperature, ' : ''} ${soilTemperature.desired && soilTemperature.desired.min ? 'desiredSoilTemperatureMin, ' : ''} ${soilTemperature.desired && soilTemperature.desired.max ? 'desiredSoilTemperatureMax, ' : ''}
       updatedAt
     `
   const valuesForColumns = `
-      ${airHumidity.value ? `${airHumidity.value}, ` : ''}
-      ${airHumidity.desired.min ? `${airHumidity.desired.min}, ` : ''}
-      ${airHumidity.desired.max ? `${airHumidity.desired.max}, ` : ''}
-      ${airTemperature.value ? `${airTemperature.value}, ` : ''}
-      ${airTemperature.desired.min ? `${airTemperature.desired.min}, ` : ''}
-      ${airTemperature.desired.max ? `${airTemperature.desired.max}, ` : ''}
-      ${soilHumidity.value ? `${soilHumidity.value}, ` : ''}
-      ${soilHumidity.desired.min ? `${soilHumidity.desired.min}, ` : ''}
-      ${soilHumidity.desired.max ? `${soilHumidity.desired.max}, ` : ''}
-      ${soilTemperature.value ? `${soilTemperature.value}, ` : ''}
-      ${soilTemperature.desired.min ? `${soilTemperature.desired.min}, ` : ''}
-      ${soilTemperature.desired.max ? `${soilTemperature.desired.max}, ` : ''}
+      ${airHumidity.value || airHumidity.value === 0 ? `${airHumidity.value}, ` : ''}
+      ${airHumidity.desired && sairHumidity.desired.min ? `${airHumidity.desired.min}, ` : ''}
+      ${airHumidity.desired && sairHumidity.desired.max ? `${sairHumidity.desired.max}, ` : ''}
+      ${airTemperature.value || airTemperature.value === 0 ? `${airTemperature.value}, ` : ''}
+      ${airTemperature.desired && airTemperature.desired.min ? `${airTemperature.desired.min}, ` : ''}
+      ${airTemperature.desired && airTemperature.desired.max ? `${airTemperature.desired.max}, ` : ''}
+      ${soilHumidity.value || soilHumidity.value === 0 ? `${soilHumidity.value}, ` : ''}
+      ${soilHumidity.desired && soilHumidity.desired.min ? `${soilHumidity.desired.min}, ` : ''}
+      ${soilHumidity.desired && soilHumidity.desired.max ? `${soilHumidity.desired.max}, ` : ''}
+      ${soilTemperature.value || soilTemperature.value === 0 ? `${soilTemperature.value}, ` : ''}
+      ${soilTemperature.desired && soilTemperature.desired.min ? `${soilTemperature.desired.min}, ` : ''}
+      ${soilTemperature.desired && soilTemperature.desired.max ? `${soilTemperature.desired.max}, ` : ''}
       ${updatedAt}
     `
 
