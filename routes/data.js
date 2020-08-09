@@ -48,9 +48,7 @@ Router.get('/', (req, res) => {
 })
 
 Router.post('/', (req, res) => {
-  console.log('body: ', req.body)
   const { airHumidity = {}, airTemperature = {}, soilHumidity = {}, soilTemperature = {} } = req.body
-  console.log('airTemperature: ', airTemperature)
   const timestamp = new Date().getTime()
   const updatedAt = moment(timestamp).format("DD/MM/YYYY")
 
